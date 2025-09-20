@@ -7,4 +7,4 @@ workflows:
     scripts:
       - name: Build app
         script: |
-          xcodebuild build -workspace vadvusd.xcodeproj\project.xcworkspace -scheme vadvusd
+          xcodebuild build -workspace project.xcworkspace -scheme vadvusd
