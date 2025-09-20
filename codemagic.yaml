@@ -1,53 +1,10 @@
 workflows:
-  ios-release:
-    name: iOS Release Build
+  ios-test:
+    name: iOS Test Build
     environment:
-      groups:
-        - app_store_credentials # Добавьте сюда ваши App Store Connect credentials
-        - certificate_credentials # Добавьте сюда сертификаты и профили
       xcode: latest
       cocoapods: default
-    triggering:
-      events:
-        - push
-        - tag
-      branch_patterns:
-        - pattern: 'release/*'
-          include: true
-          source: true
     scripts:
-      - name: Set up keychain
+      - name: Build app
         script: |
-          keychain initialize
-      - name: Fetch signing files
-        script: |
-          app-store-connect fetch-signing-files "com.yourcompany.yourapp" \
-            --type IOS_APP_STORE \
-            --create
-      - name: Use system default keychain
-        script: |
-          keychain add-certificates
-      - name: Set up code signing settings
-        script: |
-          xcode-project use-profiles
-      - name: Install pods
-        script: |
-          pod install
-      - name: Build IPA
-        script: |
-          xcode-project build-ipa \
-            --workspace "YourApp.xcworkspace" \
-            --scheme "YourApp" \
-            --destination "generic/platform=iOS"
-    artifacts:
-      - build/ios/ipa/*.ipa
-      - build/ios/xcarchive/*.xcarchive
-    publishing:
-      email:
-        recipients:
-          - your-email@example.com
-      app_store_connect:
-        auth: integration # Исправлено с "integration_key" на "integration"
-        submit_to_app_store: true
-        # Необязательно: автоматически выпускать версию после одобрения
-        # release_type: AFTER_APPROVAL
+          xcodebuild build -workspace vadvusd.xcworkspace -scheme vadvusd
