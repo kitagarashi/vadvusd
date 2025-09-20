@@ -50,7 +50,7 @@ workflows:
           - success
           - failure
       app_store_connect:
-        auth: integration_key # Используется из группы app_store_credentials
+        auth: integration # Исправлено с "integration_key" на "integration"
         submit_to_app_store: true
         # Необязательно: автоматически выпускать версию после одобрения
         # release_type: AFTER_APPROVAL
